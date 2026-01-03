@@ -54,19 +54,24 @@ export default function App() {
 
       <ActivityLayer selectedActivities={selectedActivities} startDate={startDate} endDate={endDate} />
 
-      {!!popupFeature && (
+      {!!popupFeature && popupFeature.properties && (
         <Popup 
           longitude={popupFeature.geometry.coordinates[0]} 
           latitude={popupFeature.geometry.coordinates[1]}
           style={{color:'black'}}
           onClose={()=>setPopupFeature(null)}
           >
+        <h3>{popupFeature.properties.simplified_activity || ''}</h3>
+        <b>Date:</b> {popupFeature.properties.start_datetime_str}<br/>
+        <b>Time Start:</b> {popupFeature.properties.start_hour_min}<br/>
+        <b>Address:</b> {popupFeature.properties.address}<br/>
+        <b>Location Name:</b> {popupFeature.properties.location_type}<br/>
+        <b>License Plates:</b> {popupFeature.properties.ice_license_plates}<br/>
+        <b>People Taken:</b> {popupFeature.properties.people_taken}<br/>
+        <b>Agent Quantity:</b> {popupFeature.properties.agent_qty}<br/>
+        <b>Vehicle Quantity:</b> {popupFeature.properties.vehicle_qty}<br/>
+        <b>Additional Description:</b> {popupFeature.properties.additional_description}
 
-          {popupFeature.properties && Object.entries(popupFeature.properties).map(([key, value]) => (
-            <div key={key}>
-              <strong>{key}</strong>: {value}
-            </div>
-          ))}
         </Popup>
       )}
 
