@@ -4,10 +4,13 @@ import { ActivityLayer, LAYER_IDS as ACTIVITY_LAYER_IDS, ACTIVITIES } from "./Ac
 import { LprLayer, LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
 import 'maplibre-gl/dist/maplibre-gl.css';
 import SettingsIcon from './assets/settings.png';
+import { ActivityLegend } from "./ActivityLayer/ActivityLegend";
+import LegendIcon from './assets/legend.png';
 
 export default function App() {
 
   const [showSettings, setShowSettings] = useState(false);
+  const [showLegend, setShowLegend] = useState(false);
 
   const [popupFeature, setPopupFeature] = useState(undefined);
 
@@ -61,21 +64,38 @@ export default function App() {
           style={{color:'black'}}
           onClose={()=>setPopupFeature(null)}
           >
-        <h3>{popupFeature.properties.simplified_activity || ''}</h3>
-        <b>Date:</b> {popupFeature.properties.start_datetime_str}<br/>
-        <b>Time Start:</b> {popupFeature.properties.start_hour_min}<br/>
-        <b>Address:</b> {popupFeature.properties.address}<br/>
-        <b>Location Name:</b> {popupFeature.properties.location_type}<br/>
-        <b>License Plates:</b> {popupFeature.properties.ice_license_plates}<br/>
-        <b>People Taken:</b> {popupFeature.properties.people_taken}<br/>
-        <b>Agent Quantity:</b> {popupFeature.properties.agent_qty}<br/>
-        <b>Vehicle Quantity:</b> {popupFeature.properties.vehicle_qty}<br/>
-        <b>Additional Description:</b> {popupFeature.properties.additional_description}
+          <h3 style={{ margin: '0 0 4px', fontSize: '14px' }}>{popupFeature.properties.simplified_activity}</h3>
+          <b>Date:</b> {popupFeature.properties.start_datetime_str}<br/>
+          <b>Time Start:</b> {popupFeature.properties.start_hour_min}<br/>
+          <b>Address:</b> {popupFeature.properties.address}<br/>
+          <b>Location Name:</b> {popupFeature.properties.location_type}<br/>
+          <b>License Plates:</b> {popupFeature.properties.ice_license_plates}<br/>
+          <b>People Taken:</b> {popupFeature.properties.people_taken}<br/>
+          <b>Agent Quantity:</b> {popupFeature.properties.agent_qty}<br/>
+          <b>Vehicle Quantity:</b> {popupFeature.properties.vehicle_qty}<br/>
+          <b>Additional Description:</b> {popupFeature.properties.additional_description}
 
         </Popup>
       )}
 
     </Map>
+
+
+    <div  style={{        
+      position: 'absolute',
+      margin: 0, padding: 0,
+      top: 0,
+      right: 0,
+      pointerEvents:'all'}}>
+      <button id="legendToggle" onClick={()=>setShowLegend(!showLegend)} 
+      style={{background:'transparent', border:'none', cursor:'pointer', margin:0, padding:0}}>
+        <img src={LegendIcon} alt="Logo" width={44} />;
+      </button>
+    </div>
+    
+    {showLegend && (<div id="map-legend-right" >  
+      <ActivityLegend selectedActivities={selectedActivities} />
+    </div>)}
 
     <div  style={{        
       position: 'absolute',
