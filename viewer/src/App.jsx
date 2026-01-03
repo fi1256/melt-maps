@@ -1,11 +1,13 @@
 import { useState } from "react";
-import Map, { Layer, Popup, Source } from 'react-map-gl/maplibre'
+import Map, { Popup } from 'react-map-gl/maplibre'
 import { ActivityLayer, LAYER_IDS as ACTIVITY_LAYER_IDS, ACTIVITIES } from "./ActivityLayer";
-import { LprLayer, LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
+import { LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
 import 'maplibre-gl/dist/maplibre-gl.css';
 import SettingsIcon from './assets/settings.png';
 import { ActivityLegend } from "./ActivityLayer/ActivityLegend";
 import LegendIcon from './assets/legend.png';
+import Nouislider from "nouislider-react";
+import "nouislider/distribute/nouislider.css";
 
 export default function App() {
 
@@ -14,9 +16,10 @@ export default function App() {
 
   const [popupFeature, setPopupFeature] = useState(undefined);
 
-
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const [hoursRange, setHoursRange] = useState([0,23]);
 
   const [selectedActivities, setSelectedActivities] = useState(ACTIVITIES);
   
@@ -55,7 +58,7 @@ export default function App() {
         }}
       >
 
-      <ActivityLayer selectedActivities={selectedActivities} startDate={startDate} endDate={endDate} />
+      <ActivityLayer selectedActivities={selectedActivities} startDate={startDate} endDate={endDate} hoursRange={hoursRange} />
 
       {!!popupFeature && popupFeature.properties && (
         <Popup 
@@ -138,6 +141,13 @@ export default function App() {
                 setEndDate(now.toISOString().split("T")[0]);
               }}>Past 5 Days</button>
             </div>
+          </div>
+
+          <div className="filter-section">
+            <label className="filter-label">Hours {Math.round(hoursRange[0])} - {Math.round(hoursRange[1])}</label>
+               
+            <Nouislider range={{ min: 0, max: 23 }} start={hoursRange} connect step={1} onUpdate={e=>setHoursRange(e)}/>
+
           </div>
 
           {/* <div className="filter-section">

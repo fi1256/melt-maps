@@ -37,10 +37,12 @@ export const ActivityLayer = ({
   startDate,
   endDate,
   selectedActivities,
+  hoursRange,
 }: {
   startDate: string | null;
   endDate: string | null;
   selectedActivities: string[];
+  hoursRange: number[];
 }) => {
   const filters: ExpressionSpecification[] = [];
   if (startDate) {
@@ -49,6 +51,9 @@ export const ActivityLayer = ({
   if (endDate) {
     filters.push(["<=", ["get", "activity_date"], endDate]);
   }
+
+  filters.push([">=", ["get", "hour_of_day"], Math.round(hoursRange[0])]);
+  filters.push(["<=", ["get", "hour_of_day"], Math.round(hoursRange[1])]);
 
   const data = useQuery({
     queryKey: ["activityData"],
