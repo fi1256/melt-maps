@@ -110,11 +110,7 @@ export default function App() {
     </div>
 
 
-    {!!showSettings && <div id="map-legend" style={{        
-        position: 'absolute',
-      top: 12,
-      left: 52,
-      pointerEvents:'all'}}>
+    {!!showSettings && <div id="map-legend">
 
           <div className="filter-section">
             <label className="filter-label">Date Filter</label>
