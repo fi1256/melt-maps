@@ -97,7 +97,7 @@ export default function App() {
       pointerEvents:'all'}}>
       <button id="legendToggle" onClick={()=>setShowLegend(!showLegend)} 
       style={{background:'transparent', border:'none', cursor:'pointer', margin:0, padding:0}}>
-        <img src={LegendIcon} alt="Logo" width={44} />;
+        <img src={LegendIcon} alt="Logo" width={44} />
       </button>
     </div>
     
