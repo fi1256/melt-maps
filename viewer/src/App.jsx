@@ -13,6 +13,7 @@ export default function App() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [showLegend, setShowLegend] = useState(false);
+  const [activityDisplayType, setActivityDisplayType] = useState('points');
 
   const [popupFeature, setPopupFeature] = useState(undefined);
 
@@ -58,7 +59,11 @@ export default function App() {
         }}
       >
 
-      <ActivityLayer selectedActivities={selectedActivities} startDate={startDate} endDate={endDate} hoursRange={hoursRange} />
+      <ActivityLayer 
+        selectedActivities={selectedActivities}
+        startDate={startDate} endDate={endDate} hoursRange={hoursRange} 
+        displayType={activityDisplayType}
+      />
 
       {!!popupFeature && popupFeature.properties && (
         <Popup 
@@ -150,31 +155,17 @@ export default function App() {
 
           </div>
 
-          {/* <div className="filter-section">
-            <label className="filter-label">Time View</label>
-            <select id="hourToggle">
-              <option value="all">All Hours</option>
-              <option value="hourly">Hour slider</option>
-            </select>
-          </div>
-
-          <div className="filter-section" id="hourSliderContainer">
-            <label className="filter-label">Hour of Day</label>
-            <div id="hourSlider"></div>
-            <div id="hourLabels" className="slider-labels"></div>
-          </div>
-
           <div className="filter-section">
-            <label className="filter-label">Display Type</label>
-            <select id="displayType">
-              <option value="points">Points Only</option>
-              <option value="heatmap">Heatmap Only</option>
-              <option value="both">Points + Heatmap</option>
-            </select>
-          </div> */}
+            <label className="filter-label">Activities
+              <button style={{padding:5}} onClick={()=>setSelectedActivities(ACTIVITIES)}>all</button>
+              <button style={{padding:5}} onClick={()=>setSelectedActivities([])}>none</button>
 
-          <div className="filter-section">
-            <label className="filter-label">Activities <button onClick={()=>setSelectedActivities(ACTIVITIES)}>all</button> <button onClick={()=>setSelectedActivities([])}>none</button></label>
+              <select id="displayType" onChange={e=>setActivityDisplayType(e.target.value)} value={activityDisplayType}>
+                <option value="points">Points Only</option>
+                <option value="heatmap">Heatmap Only</option>
+                <option value="both">Points + Heatmap</option>
+              </select>
+            </label>
             <div className="checkbox-grid" id="activityToggles">
               {ACTIVITIES.map((activity) => (
                 <label key={activity}>

@@ -38,11 +38,13 @@ export const ActivityLayer = ({
   endDate,
   selectedActivities,
   hoursRange,
+  displayType,
 }: {
   startDate: string | null;
   endDate: string | null;
   selectedActivities: string[];
   hoursRange: number[];
+  displayType: string;
 }) => {
   const filters: ExpressionSpecification[] = [];
   if (startDate) {
@@ -54,6 +56,15 @@ export const ActivityLayer = ({
 
   filters.push([">=", ["get", "hour_of_day"], Math.round(hoursRange[0])]);
   filters.push(["<=", ["get", "hour_of_day"], Math.round(hoursRange[1])]);
+
+  const pointFilters: ExpressionSpecification[] = [
+    ...filters,
+    [
+      "==",
+      ["get", "activity_date"],
+      displayType === "heatmap" ? "hide" : ["get", "activity_date"],
+    ],
+  ];
 
   const data = useQuery({
     queryKey: ["activityData"],
@@ -83,12 +94,33 @@ export const ActivityLayer = ({
       data={data.data! as FeatureCollection}
     >
       <Layer
+        id="activity-heatmap-layer"
+        type="heatmap"
+        paint={{
+          "heatmap-intensity": 0.1,
+        }}
+        layout={{
+          visibility: displayType === "points" ? "none" : "visible",
+        }}
+        filter={[
+          "all",
+          // simpligied_actiity is in the selected activities
+          [
+            "in",
+            ["get", "simplified_activity"],
+            ["literal", selectedActivities],
+          ],
+          ...filters,
+        ]}
+      />
+
+      <Layer
         type="circle"
         id="activity-layer-threat"
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Threat"],
-          ...filters,
+          ...pointFilters,
         ]}
         paint={{
           "circle-radius": 5,
@@ -108,7 +140,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Misc/Unknown"],
-          ...filters,
+          ...pointFilters,
         ]}
         paint={{
           "circle-radius": 5,
@@ -128,7 +160,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Driving/Observed"],
-          ...filters,
+          ...pointFilters,
         ]}
         paint={{
           "circle-radius": 4,
@@ -149,7 +181,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Helicopter"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "helicopter",
@@ -166,7 +198,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Stakeout"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "stakeout",
@@ -183,7 +215,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Drone"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "drone",
@@ -198,7 +230,7 @@ export const ActivityLayer = ({
         filter={[
           "all",
           ["==", ["get", "simplified_activity"], "Gathering/Staging"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "bullseye",
@@ -216,7 +248,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Raid"],
           ["==", ["get", "abducted_yn"], "Unknown"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "hexagon-gray",
@@ -232,7 +264,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Raid"],
           ["==", ["get", "abducted_yn"], "No"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "hexagon-white",
@@ -248,7 +280,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Raid"],
           ["==", ["get", "abducted_yn"], "Yes"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "hexagon-red",
@@ -264,7 +296,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Abduction/Attempt"],
           ["==", ["get", "abducted_yn"], "Unknown"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "triangle-gray",
@@ -282,7 +314,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Abduction/Attempt"],
           ["==", ["get", "abducted_yn"], "No"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "triangle-white",
@@ -300,7 +332,7 @@ export const ActivityLayer = ({
           "all",
           ["==", ["get", "simplified_activity"], "Abduction/Attempt"],
           ["==", ["get", "abducted_yn"], "Yes"],
-          ...filters,
+          ...pointFilters,
         ]}
         layout={{
           "icon-image": "triangle-red",

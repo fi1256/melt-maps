@@ -126,6 +126,8 @@ button:focus-visible {
 
 .filter-section { margin-bottom: 12px; }
 .filter-label { display:block; font-weight:600; margin-bottom:6px; }
+.filter-label button { margin-left:6px; font-weight:400; padding:2px 6px; font-size:12px; }
+.filter-label select { margin-left:6px; font-weight:400; padding:2px 6px; font-size:12px; }
 .date-row { display:flex; gap:6px; }
 .date-row input { flex:1; }
 .primary-btn { white-space:nowrap; }
