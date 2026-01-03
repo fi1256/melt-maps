@@ -113,7 +113,7 @@ export default function App() {
       pointerEvents:'all'}}>
       <button id="settingsToggle" onClick={()=>setShowSettings(!showSettings)} 
       style={{background:'transparent', border:'none', cursor:'pointer', margin:0, padding:0}}>
-        <img src={SettingsIcon} alt="Logo" width={44} />;
+        <img src={SettingsIcon} alt="Logo" width={44} />
       </button>
     </div>
 
