@@ -1,0 +1,27 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 -15 200 185">
+      <!-- Center point is (100, 100) -->
+
+      <!-- Thick black ring (annulus) -->
+      <!-- Outer circle radius 40, inner circle radius 25 -->
+      <circle cx="100" cy="100" r="25" fill="black"/>
+      <circle cx="100" cy="100" r="15" fill="white"/>
+
+      <!-- Three equally spaced ovals (fan blades) -->
+      <!-- Each blade is rotated by 120 degrees relative to the center -->
+
+      <!-- Blade 1 (top/vertical, rotated 0 deg) -->
+      <!-- Placed to touch the outer edge of the ring -->
+      <g transform="translate(100, 100) rotate(0)">
+        <ellipse cx="0" cy="-70" rx="12" ry="45" fill="black"/>
+      </g>
+
+      <!-- Blade 2 (rotated 120 deg) -->
+      <g transform="translate(100, 100) rotate(120)">
+        <ellipse cx="0" cy="-70" rx="12" ry="45" fill="black"/>
+      </g>
+
+      <!-- Blade 3 (rotated 240 deg) -->
+      <g transform="translate(100, 100) rotate(240)">
+        <ellipse cx="0" cy="-70" rx="12" ry="45" fill="black"/>
+      </g>
+    </svg>
