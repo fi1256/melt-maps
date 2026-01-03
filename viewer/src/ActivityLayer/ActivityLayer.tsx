@@ -96,6 +96,7 @@ export const ActivityLayer = ({
       <Layer
         id="activity-heatmap-layer"
         type="heatmap"
+        beforeId="landcover"
         paint={{
           "heatmap-intensity": 0.1,
         }}
