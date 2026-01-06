@@ -1,9 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import JSON from "./demo.json";
 import { Layer, Source, useMap } from "react-map-gl/maplibre";
 import { FeatureCollection } from "geojson";
 import { useMapPngImage } from "./useMapPngImage";
 import { ExpressionSpecification } from "maplibre-gl";
+import { useActivityData } from "./useActivityData";
 
 export const ACTIVITIES = [
   "Raid",
@@ -66,13 +65,6 @@ export const ActivityLayer = ({
     ],
   ];
 
-  const data = useQuery({
-    queryKey: ["activityData"],
-    queryFn: () => {
-      return Promise.resolve(JSON);
-    },
-  });
-
   useMapPngImage("bullseye", "./icons/bullseye.png", { pixelRatio: 2 });
   useMapPngImage("drone", "./icons/drone.png");
   useMapPngImage("helicopter", "./icons/helicopter.png");
@@ -83,15 +75,19 @@ export const ActivityLayer = ({
   useMapPngImage("triangle-red", "./icons/triangle-red.png");
   useMapPngImage("triangle-gray", "./icons/triangle-gray.png");
   useMapPngImage("triangle-white", "./icons/triangle-white.png");
-  if (!data.data) {
-    return null;
-  }
+
+  const data = useActivityData();
 
   return (
     <Source
       id="activity-data"
       type="geojson"
-      data={data.data! as FeatureCollection}
+      data={
+        (data.data || {
+          type: "FeatureCollection",
+          features: [],
+        }) as FeatureCollection
+      }
     >
       <Layer
         id="activity-heatmap-layer"
@@ -105,7 +101,7 @@ export const ActivityLayer = ({
         }}
         filter={[
           "all",
-          // simpligied_actiity is in the selected activities
+          // simplified_activity is in the selected activities
           [
             "in",
             ["get", "simplified_activity"],
