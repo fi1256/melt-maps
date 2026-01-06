@@ -11,8 +11,8 @@ import "nouislider/distribute/nouislider.css";
 
 export default function App() {
 
-  const [showSettings, setShowSettings] = useState(false);
-  const [showLegend, setShowLegend] = useState(false);
+  const [showSettings, setShowSettings] = useState(true);
+  const [showLegend, setShowLegend] = useState(true);
   const [activityDisplayType, setActivityDisplayType] = useState('points');
 
   const [popupFeature, setPopupFeature] = useState(undefined);
@@ -53,10 +53,12 @@ export default function App() {
             setPopupFeature(e.features[0]);  
           }          
         }}
-        onLoad={(event)=>{
-          const map = event.target
 
-        }}
+        maxBounds={[
+          [ -101.28423864235761,42.94048660448547],
+          [ -84.53595903629167,46.63502927592219]
+        ]}
+
       >
 
       <ActivityLayer 
