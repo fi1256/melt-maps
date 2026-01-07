@@ -5,23 +5,26 @@ export const useActivityData = () =>
     queryKey: ["activity-data"],
     queryFn: async () => {
       const response = await fetch(
-        "https://activity.fi1256.workers.dev/table/All%20Data"
+        "https://activity.fi1256.workers.dev/table/All%20Data/v2"
       );
 
-      const records = await response.json();
+      const data = await response.json();
 
       return {
-        type: "FeatureCollection",
-        features: records.map((record: any) => ({
-          type: "Feature",
-          properties: {
-            ...record.fields,
-          },
-          geometry: {
-            type: "Point",
-            coordinates: [record.fields.long, record.fields.lat],
-          },
-        })),
+        updated: data.updated,
+        geojson: {
+          type: "FeatureCollection",
+          features: data.records.map((record: any) => ({
+            type: "Feature",
+            properties: {
+              ...record.fields,
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [record.fields.long, record.fields.lat],
+            },
+          })),
+        },
       };
     },
     staleTime: 60 * 60 * 1000, // 60 minutes

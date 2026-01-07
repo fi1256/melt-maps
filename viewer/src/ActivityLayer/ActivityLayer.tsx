@@ -83,7 +83,7 @@ export const ActivityLayer = ({
       id="activity-data"
       type="geojson"
       data={
-        (data.data || {
+        (data.data?.geojson || {
           type: "FeatureCollection",
           features: [],
         }) as FeatureCollection
