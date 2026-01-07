@@ -37,8 +37,8 @@ export default function App() {
         preserveDrawingBuffer={true}
         mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         initialViewState={{
-          longitude: -93.27,
-          latitude: 44.98,
+          longitude: -93.25,
+          latitude: 44.92,
           zoom: 9.5
         }}
         style={{width: "100vw", height: "100vh"}}
@@ -66,6 +66,7 @@ export default function App() {
           [ -101.28423864235761,42.94048660448547],
           [ -84.53595903629167,46.63502927592219]
         ]}
+
       >
 
       <ActivityLayer 
