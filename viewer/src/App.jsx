@@ -36,7 +36,7 @@ export default function App() {
         initialViewState={{
           longitude: -93.27,
           latitude: 44.98,
-          zoom: 8
+          zoom: 9.5
         }}
         style={{width: "100vw", height: "100vh"}}
         dragRotate={false}
