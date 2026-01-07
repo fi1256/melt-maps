@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Map, { Popup } from 'react-map-gl/maplibre'
+import Map, { MapProvider, Popup } from 'react-map-gl/maplibre'
 import { ActivityLayer, LAYER_IDS as ACTIVITY_LAYER_IDS, ACTIVITIES } from "./ActivityLayer";
 import { LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -8,6 +8,7 @@ import { ActivityLegend } from "./ActivityLayer/ActivityLegend";
 import LegendIcon from './assets/legend.png';
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
+import { SnapshotButton } from "./SnapshotButton";
 
 export default function App() {
 
@@ -23,10 +24,14 @@ export default function App() {
   const [hoursRange, setHoursRange] = useState([0,23]);
 
   const [selectedActivities, setSelectedActivities] = useState(ACTIVITIES);
-  
+ 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+    <MapProvider>
+
+    <div style={{ position: 'relative', width: '100%', height: '100vh' }} id="container">
       <Map
+        id="activity"
+        preserveDrawingBuffer={true}
         mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         initialViewState={{
           longitude: -93.27,
@@ -58,7 +63,6 @@ export default function App() {
           [ -101.28423864235761,42.94048660448547],
           [ -84.53595903629167,46.63502927592219]
         ]}
-
       >
 
       <ActivityLayer 
@@ -97,11 +101,17 @@ export default function App() {
       top: 0,
       right: 0,
       pointerEvents:'all'}}>
+
       <button id="legendToggle" onClick={()=>setShowLegend(!showLegend)} 
       style={{background:'transparent', border:'none', cursor:'pointer', margin:0, padding:0}}>
         <img src={LegendIcon} alt="Logo" width={44} />
       </button>
+
+      <br/>
+
+      <SnapshotButton />
     </div>
+
     
     {showLegend && (<div id="map-legend-right" >  
       <ActivityLegend selectedActivities={selectedActivities} />
@@ -209,5 +219,7 @@ export default function App() {
       </div>
  
     </div>
+        </MapProvider>
+
   );
 }
