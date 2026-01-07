@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Map, { MapProvider, Popup } from 'react-map-gl/maplibre'
 import { ActivityLayer, LAYER_IDS as ACTIVITY_LAYER_IDS, ACTIVITIES } from "./ActivityLayer";
 import { LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
@@ -10,6 +10,8 @@ import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import { SnapshotButton } from "./SnapshotButton";
 import { useActivityData } from "./ActivityLayer/useActivityData";
+import { uniq} from 'ramda'
+import { CategoricalFilter } from "./CategoricalFilter";
 
 export default function App() {
 
@@ -27,7 +29,22 @@ export default function App() {
   const [selectedActivities, setSelectedActivities] = useState(ACTIVITIES);
 
   const activityData = useActivityData()
- 
+
+  const cities = uniq(activityData.data?.geojson.features.map(f=>f.properties.city).filter(Boolean)||[])
+const [selectedCities, setSelectedCitiesValue] = useState([]);
+
+const counties = uniq(activityData.data?.geojson.features.map(f=>f.properties.county).filter(Boolean)||[])
+const [selectedCounties, setSelectedCountiesValue] = useState([]);
+
+const setSelectedCities = value => {
+  setSelectedCountiesValue([])
+  setSelectedCitiesValue(value)
+} 
+const setSelectedCounties = value => {
+  setSelectedCitiesValue([])
+  setSelectedCountiesValue(value)
+}
+
   return (
     <MapProvider>
 
@@ -73,6 +90,8 @@ export default function App() {
         selectedActivities={selectedActivities}
         startDate={startDate} endDate={endDate} hoursRange={hoursRange} 
         displayType={activityDisplayType}
+        selectedCities={selectedCities}
+        selectedCounties={selectedCounties}
       />
 
       {!!popupFeature && popupFeature.properties && (
@@ -170,9 +189,10 @@ export default function App() {
 
           <div className="filter-section">
             <label className="filter-label">Hours {Math.round(hoursRange[0])} - {Math.round(hoursRange[1])}</label>
-               
-            <Nouislider range={{ min: 0, max: 23 }} start={hoursRange} connect step={1} onUpdate={e=>setHoursRange(e)}/>
 
+            <div style={{marginLeft:10, marginRight:10}}>               
+              <Nouislider range={{ min: 0, max: 23 }} start={hoursRange} connect step={1} onUpdate={e=>setHoursRange(e)}/>
+            </div>
           </div>
 
           <div className="filter-section">
@@ -210,6 +230,15 @@ export default function App() {
             </div>
           </div>
 
+          <div className="filter-section" style={{maxWidth:'100%'}}>
+            <label className="filter-label">Cities</label>
+            <CategoricalFilter options={cities} selectedOptions={selectedCities} setSelectedOptions={setSelectedCities} />
+          </div>
+
+          <div className="filter-section" style={{maxWidth:'100%'}}>
+            <label className="filter-label">Counties</label>
+            <CategoricalFilter options={counties} selectedOptions={selectedCounties} setSelectedOptions={setSelectedCounties} />
+          </div>
 
       </div>}
 

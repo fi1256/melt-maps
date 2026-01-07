@@ -38,12 +38,16 @@ export const ActivityLayer = ({
   selectedActivities,
   hoursRange,
   displayType,
+  selectedCities,
+  selectedCounties,
 }: {
   startDate: string | null;
   endDate: string | null;
   selectedActivities: string[];
   hoursRange: number[];
   displayType: string;
+  selectedCities: string[];
+  selectedCounties: string[];
 }) => {
   const filters: ExpressionSpecification[] = [];
   if (startDate) {
@@ -56,11 +60,18 @@ export const ActivityLayer = ({
   filters.push([">=", ["get", "hour_of_day"], Math.round(hoursRange[0])]);
   filters.push(["<=", ["get", "hour_of_day"], Math.round(hoursRange[1])]);
 
+  if (selectedCities?.length > 0) {
+    filters.push(["in", ["get", "city"], ["literal", selectedCities]]);
+  }
+  if (selectedCounties?.length > 0) {
+    filters.push(["in", ["get", "county"], ["literal", selectedCounties]]);
+  }
+
   const pointFilters: ExpressionSpecification[] = [
     ...filters,
     [
       "==",
-      ["get", "activity_date"],
+      ["get", "activity_date"], // just any value that will never equal "hide"
       displayType === "heatmap" ? "hide" : ["get", "activity_date"],
     ],
   ];
