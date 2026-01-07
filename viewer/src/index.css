@@ -70,7 +70,7 @@ button:focus-visible {
 
 #map-legend {
   position: absolute;
-  top: 12px;
+  top: 18px;
   left: 52px;
   background: white;
   padding: 10px 12px;
@@ -83,7 +83,7 @@ button:focus-visible {
 }
 #map-legend-right {
   position: absolute;
-  top: 12px;
+  top: 18px;
   right: 52px;
   background: white;
   padding: 10px 12px;
