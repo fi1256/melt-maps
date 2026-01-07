@@ -9,6 +9,7 @@ import LegendIcon from './assets/legend.png';
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import { SnapshotButton } from "./SnapshotButton";
+import { useActivityData } from "./ActivityLayer/useActivityData";
 
 export default function App() {
 
@@ -24,6 +25,8 @@ export default function App() {
   const [hoursRange, setHoursRange] = useState([0,23]);
 
   const [selectedActivities, setSelectedActivities] = useState(ACTIVITIES);
+
+  const activityData = useActivityData()
  
   return (
     <MapProvider>
@@ -117,16 +120,20 @@ export default function App() {
       <ActivityLegend selectedActivities={selectedActivities} />
     </div>)}
 
-    <div  style={{        
+    <div style={{        
       position: 'absolute',
       margin: 0, padding: 0,
       top: 0,
       left: 0,
-      pointerEvents:'all'}}>
+      pointerEvents:'all', verticalAlign:'top'}}>
       <button id="settingsToggle" onClick={()=>setShowSettings(!showSettings)} 
       style={{background:'transparent', border:'none', cursor:'pointer', margin:0, padding:0}}>
         <img src={SettingsIcon} alt="Logo" width={44} />
       </button>
+
+      <span style={{position: 'absolute', top: 0, left: 48, color:'black', fontSize:12, backgroundColor:'white', fontStyle: 'italic', whiteSpace: 'nowrap'}}>
+        updated {activityData.data?.updated ? new Date(activityData.data.updated).toLocaleString() : ''}
+      </span>
     </div>
 
 
