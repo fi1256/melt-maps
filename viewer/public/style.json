@@ -5609,7 +5609,7 @@
       "type": "symbol",
       "source": "carto",
       "source-layer": "transportation_name",
-      "minzoom": 16,
+      "minzoom": 14,
       "filter": [
         "all",
         [
