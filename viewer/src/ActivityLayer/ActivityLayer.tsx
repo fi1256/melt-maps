@@ -14,6 +14,7 @@ export const ACTIVITIES = [
   "Drone",
   "Helicopter",
   "Misc/Unknown",
+  "Threat to Observers",
 ];
 
 export const LAYER_IDS = [
@@ -30,6 +31,7 @@ export const LAYER_IDS = [
   "activity-layer-abduction-unknown",
   "activity-layer-abduction-no",
   "activity-layer-abduction-yes",
+  "activity-layer-threat-to-observers",
 ];
 
 export const ActivityLayer = ({
@@ -86,6 +88,7 @@ export const ActivityLayer = ({
   useMapPngImage("triangle-red", "./icons/triangle-red.png");
   useMapPngImage("triangle-gray", "./icons/triangle-gray.png");
   useMapPngImage("triangle-white", "./icons/triangle-white.png");
+  useMapPngImage("danger", "./icons/danger.png");
 
   const data = useActivityData();
 
@@ -347,6 +350,23 @@ export const ActivityLayer = ({
           "icon-size": 0.16,
           "icon-allow-overlap": true,
           visibility: selectedActivities.includes("Abduction/Attempt")
+            ? "visible"
+            : "none",
+        }}
+      />
+      <Layer
+        type="symbol"
+        id="activity-layer-threat-to-observers"
+        filter={[
+          "all",
+          ["==", ["get", "simplified_activity"], "Threat to Observers"],
+          ...pointFilters,
+        ]}
+        layout={{
+          "icon-image": "danger",
+          "icon-size": 1,
+          "icon-allow-overlap": true,
+          visibility: selectedActivities.includes("Threat to Observers")
             ? "visible"
             : "none",
         }}

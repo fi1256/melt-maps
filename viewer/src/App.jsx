@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Map, { MapProvider, Popup } from 'react-map-gl/maplibre'
 import { ActivityLayer, LAYER_IDS as ACTIVITY_LAYER_IDS, ACTIVITIES } from "./ActivityLayer";
 import { LAYER_IDS as LPR_LAYER_IDS } from "./LprLayer";
@@ -102,7 +102,7 @@ const setSelectedCounties = value => {
           onClose={()=>setPopupFeature(null)}
           >
           <h3 style={{ margin: '0 0 4px', fontSize: '14px' }}>{popupFeature.properties.simplified_activity}</h3>
-          <b>Date:</b> {popupFeature.properties.start_datetime_str}<br/>
+          <b>Date:</b> {new Date(popupFeature.properties.start_datetime_str).toLocaleDateString()}<br/>
           <b>Time Start:</b> {popupFeature.properties.start_hour_min}<br/>
           <b>Address:</b> {popupFeature.properties.address}<br/>
           <b>Location Name:</b> {popupFeature.properties.location_type}<br/>
