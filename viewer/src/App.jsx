@@ -52,7 +52,7 @@ const setSelectedCounties = value => {
       <Map
         id="activity"
         preserveDrawingBuffer={true}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        mapStyle="style.json"
         initialViewState={{
           longitude: -93.25,
           latitude: 44.92,
