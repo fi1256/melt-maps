@@ -73,6 +73,11 @@ const ACTIVITIES = [
     label: "Misc/Unknown",
     icon: svgToDataUrl(grayCircleSvg),
   },
+  {
+    simplified: "Threat to Observers",
+    label: "Threat to Observers",
+    icon: "icons/danger.png",
+  },
 ];
 
 export const ActivityLegend = ({
