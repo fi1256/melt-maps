@@ -102,7 +102,7 @@ const setSelectedCounties = value => {
           onClose={()=>setPopupFeature(null)}
           >
           <h3 style={{ margin: '0 0 4px', fontSize: '14px' }}>{popupFeature.properties.simplified_activity}</h3>
-          <b>Date:</b> {new Date(popupFeature.properties.start_datetime_str).toLocaleDateString()}<br/>
+          <b>Date:</b> {popupFeature.properties.activity_date}<br/>
           <b>Time Start:</b> {popupFeature.properties.start_hour_min}<br/>
           <b>Address:</b> {popupFeature.properties.address}<br/>
           <b>Location Name:</b> {popupFeature.properties.location_type}<br/>
