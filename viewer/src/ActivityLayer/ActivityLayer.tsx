@@ -254,6 +254,23 @@ export const ActivityLayer = ({
       />
       <Layer
         type="symbol"
+        id="activity-layer-threat-to-observers"
+        filter={[
+          "all",
+          ["==", ["get", "simplified_activity"], "Threat to Observers"],
+          ...pointFilters,
+        ]}
+        layout={{
+          "icon-image": "danger",
+          "icon-size": 0.9,
+          "icon-allow-overlap": true,
+          visibility: selectedActivities.includes("Threat to Observers")
+            ? "visible"
+            : "none",
+        }}
+      />
+      <Layer
+        type="symbol"
         id="activity-layer-raid-unknown"
         filter={[
           "all",
@@ -350,23 +367,6 @@ export const ActivityLayer = ({
           "icon-size": 0.16,
           "icon-allow-overlap": true,
           visibility: selectedActivities.includes("Abduction/Attempt")
-            ? "visible"
-            : "none",
-        }}
-      />
-      <Layer
-        type="symbol"
-        id="activity-layer-threat-to-observers"
-        filter={[
-          "all",
-          ["==", ["get", "simplified_activity"], "Threat to Observers"],
-          ...pointFilters,
-        ]}
-        layout={{
-          "icon-image": "danger",
-          "icon-size": 1,
-          "icon-allow-overlap": true,
-          visibility: selectedActivities.includes("Threat to Observers")
             ? "visible"
             : "none",
         }}
