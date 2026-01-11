@@ -19,7 +19,7 @@ const grayCircleSvg = `<svg width="12" height="12" viewBox="0 0 12 12" xmlns="ht
   <circle cx="6" cy="6" r="4" fill="gray" stroke="black" stroke-width="1" />
 </svg>`;
 
-const ACTIVITIES = [
+export const ACTIVITY_ITEMS = [
   {
     simplified: "Raid",
     label: "Raid (someone taken)",
@@ -89,7 +89,7 @@ export const ActivityLegend = ({
     <div>
       <div style={{ fontWeight: "bold", marginBottom: 5 }}>Activity Legend</div>
 
-      {[...ACTIVITIES]
+      {[...ACTIVITY_ITEMS]
         .filter((activity) => selectedActivities.includes(activity.simplified))
         .map((activity) => (
           <div key={activity.label} className="legend-item">
