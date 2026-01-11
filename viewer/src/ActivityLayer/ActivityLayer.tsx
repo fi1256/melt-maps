@@ -10,17 +10,17 @@ export const ACTIVITIES = [
   "Threat",
   "Stakeout",
   "Gathering/Staging",
-  "Driving/Observed",
+  "Driving",
   "Drone",
   "Helicopter",
-  "Misc/Unknown",
+  "Observed",
   "Threat to Observers",
 ];
 
 export const LAYER_IDS = [
   "activity-layer-threat",
-  "activity-layer-misc",
-  "activity-layer-driving-observed",
+  "activity-layer-observed",
+  "activity-layer-driving",
   "activity-layer-helicopter",
   "activity-layer-stakeout",
   "activity-layer-drone",
@@ -147,10 +147,10 @@ export const ActivityLayer = ({
       />
       <Layer
         type="circle"
-        id="activity-layer-misc"
+        id="activity-layer-observed"
         filter={[
           "all",
-          ["==", ["get", "simplified_activity"], "Misc/Unknown"],
+          ["==", ["get", "simplified_activity"], "Observed"],
           ...pointFilters,
         ]}
         paint={{
@@ -160,17 +160,17 @@ export const ActivityLayer = ({
           "circle-stroke-width": 1,
         }}
         layout={{
-          visibility: selectedActivities.includes("Misc/Unknown")
+          visibility: selectedActivities.includes("Observed")
             ? "visible"
             : "none",
         }}
       />
       <Layer
         type="circle"
-        id="activity-layer-driving-observed"
+        id="activity-layer-driving"
         filter={[
           "all",
-          ["==", ["get", "simplified_activity"], "Driving/Observed"],
+          ["==", ["get", "simplified_activity"], "Driving"],
           ...pointFilters,
         ]}
         paint={{
@@ -180,7 +180,7 @@ export const ActivityLayer = ({
           "circle-stroke-width": 1,
         }}
         layout={{
-          visibility: selectedActivities.includes("Driving/Observed")
+          visibility: selectedActivities.includes("Driving")
             ? "visible"
             : "none",
         }}

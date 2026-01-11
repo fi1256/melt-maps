@@ -58,8 +58,8 @@ const ACTIVITIES = [
     icon: "icons/bullseye.png",
   },
   {
-    simplified: "Driving/Observed",
-    label: "Driving / Observed",
+    simplified: "Driving",
+    label: "Driving",
     icon: svgToDataUrl(blackCircleSvg),
   },
   { simplified: "Drone", label: "Drone", icon: "icons/drone.png" },
@@ -69,8 +69,8 @@ const ACTIVITIES = [
     icon: "icons/helicopter.png",
   },
   {
-    simplified: "Misc/Unknown",
-    label: "Misc/Unknown",
+    simplified: "Observed",
+    label: "Observed",
     icon: svgToDataUrl(grayCircleSvg),
   },
   {
